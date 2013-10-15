@@ -40,21 +40,25 @@ get "/form" do
 end
 
 post "/setname" do
+  params[:username] = "Player" if params[:username].empty?
   session[:username] = params[:username]
   redirect "/"
 end
 
 get "/bet" do
   session[:balance] ||= 500
+  session[:bet] = 0
   erb :bet
 end
 
 post "/setbet" do
+  params[:bet] = 50 if params[:bet].to_i <= 0
   if params[:bet].to_i > session[:balance]
     @error = "Bet amount cannot be greater than what you have ($#{session[:balance]})"
     erb :bet
   else
-    session[:balance] -= params[:bet].to_i
+    #session[:balance] -= params[:bet].to_i
+    session[:bet] = params[:bet].to_i
     session[:round_count] += 1
     session[:deck] = deck()
     session[:dealer_hand] = []

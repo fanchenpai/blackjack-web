@@ -10,16 +10,23 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-<a class="brand">Blackjack Game</a>
-            <ul class="nav pull-right">
-
-              <% if session.has_key?(:username) %>
-                <li>
-                  <a><i class="icon-user icon-white"></i> <%= session[:username] %></a>
-                </li>
-                <li ><a href="/restart">Restart</a></li>
-              <% end %>
-            </ul>
+          <a class="brand">Blackjack Game</a>
+          <ul class="nav pull-right">
+            <% if session.has_key?(:bet) && session[:bet] > 0 %>
+              <li>
+                <a>Balance:<strong class="text-info"> <%= session[:balance] %></strong></a>
+              </li>
+              <li>
+                <a>Bet:<strong class="text-info">  <%= session[:bet] %></strong></a>
+              </li>
+            <% end %>
+            <% if session.has_key?(:username) %>
+              <li>
+                <a><i class="icon-user icon-white"></i> <%= session[:username] %></a>
+              </li>
+              <li ><a href="/restart"><span class="badge badge-warning">Restart</span></a></li>
+            <% end %>
+          </ul>
         </div>
       </div>
     </div>
@@ -28,10 +35,16 @@
     <%if @error %>
       <div class="alert alert-error"><%=@error%></div>
     <% end %>
-      <%= yield %>
+    <%= yield %>
+
+    <small class="muted">
+      <%= session.inspect %>
+    </small>
   </div>
+
+
+
   </body>
   <script src="http://code.jquery.com/jquery.js"></script>
   <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
 </html>
-<%= session.inspect %>
