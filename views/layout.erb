@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Blackjack Card Game</title>
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/application.css">
+  </head>
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+<a class="brand">Blackjack Game</a>
+            <ul class="nav pull-right">
+
+              <% if session.has_key?(:username) %>
+                <li>
+                  <a><i class="icon-user icon-white"></i> <%= session[:username] %></a>
+                </li>
+                <li ><a href="/restart">Restart</a></li>
+              <% end %>
+            </ul>
+        </div>
+      </div>
+    </div>
+
+  <div class="container">
+    <%if @error %>
+      <div class="alert alert-error"><%=@error%></div>
+    <% end %>
+      <%= yield %>
+  </div>
+  </body>
+  <script src="http://code.jquery.com/jquery.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+</html>
+<%= session.inspect %>

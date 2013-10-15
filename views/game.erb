@@ -1,0 +1,32 @@
+
+
+
+
+
+<div class="well">
+  <h4>Dealer's Cards</h4>
+<p>
+  <img class='img-polaroid img-rounded' src='/images/cards/cover.jpg' />
+</p>
+
+</div>
+
+
+<div class="well">
+  <h4><%= "#{session[:username]}'s Cards" %></h4>
+<p>
+  <% session[:player_hand].each do |c| %>
+    <%= "<img class='img-polaroid img-rounded' src='/images/cards/#{c[0]}_#{c[1]}.jpg' />" %>
+  <% end %>
+</p>
+
+  <p>
+    <a class="btn btn-success btn-large">
+      Hit
+    </a>
+
+    <a class="btn btn-warning btn-large">
+      Stay
+    </a>
+  </p>
+</div>

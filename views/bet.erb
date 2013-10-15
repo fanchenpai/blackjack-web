@@ -1,0 +1,11 @@
+<form class="form-search" name="my_form" method="post" action="/setbet">
+  <fieldset>
+    <legend>Game Round <%= session[:round_count] %></legend>
+    <div class="help-block">
+      <%= session[:username] + " has " + session[:balance].to_s %>
+    </div>
+    <div>Make a bet for this round</div>
+    <input type="text" name="bet" placeholder="50">
+    <button type="submit" class="btn">Make Bet</button>
+  </fieldset>
+</form>
