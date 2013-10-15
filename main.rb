@@ -14,6 +14,10 @@ helpers do
       .product(['2','3','4','5','6','7','8','9','10','jack','queen','king','ace'])
         .shuffle
   end
+
+  def round_continue?
+
+  end
 end
 
 get "/restart" do

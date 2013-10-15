@@ -7,6 +7,9 @@
   <h4>Dealer's Cards</h4>
 <p>
   <img class='img-polaroid img-rounded' src='/images/cards/cover.jpg' />
+  <% session[:dealer_hand].last(session[:dealer_hand].length - 1).each do |c| %>
+    <%= "<img class='img-polaroid img-rounded' src='/images/cards/#{c[0]}_#{c[1]}.jpg' />" %>
+  <% end %>
 </p>
 
 </div>
