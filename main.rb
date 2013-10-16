@@ -4,6 +4,10 @@ require 'pry'
 
 enable :sessions
 
+BLACKJACK_AMOUNT = 21
+DEALER_MIN_HIT = 17
+INITIAL_POT_AMOUNT = 500
+
 helpers do
   def calculate_total(arr=[])
     total = 0
@@ -18,7 +22,7 @@ helpers do
         ace_count += 1
       end
     end
-    until ace_count == 0 || total <= 21
+    until ace_count == 0 || total <= BLACKJACK_AMOUNT
       total -= 10
       ace_count -= 1
     end
@@ -65,9 +69,9 @@ helpers do
 
   def round_continue?
     if session[:dealer_turn]
-      dealer_total < 17
+      dealer_total < DEALER_MIN_HIT
     else
-      player_total < 21
+      player_total < BLACKJACK_AMOUNT
     end
   end
 
@@ -117,7 +121,7 @@ post "/setname" do
 end
 
 get "/bet" do
-  session[:balance] ||= 500
+  session[:balance] ||= INITIAL_POT_AMOUNT
   session[:bet] = 0
   erb :bet
 end
@@ -137,10 +141,10 @@ end
 get "/game" do
   unless round_continue?
     if session[:dealer_turn]
-      if dealer_total > 21
+      if dealer_total > BLACKJACK_AMOUNT
         win
         @result = "Dealer busted. You win!"
-      elsif dealer_total == 21
+      elsif dealer_total == BLACKJACK_AMOUNT
         lose
         @result = "Dealer hit blackjack. You lose."
       else # compare result
@@ -156,7 +160,7 @@ get "/game" do
         end
       end
     else # player turn
-      if player_total > 21
+      if player_total > BLACKJACK_AMOUNT
         lose
         @result = "Busted. You lose."
       else # blackjack!
