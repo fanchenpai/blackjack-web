@@ -36,6 +36,15 @@ helpers do
     session[:deck].pop
   end
 
+  def card_face_image(card)
+    "<img class='img-polaroid img-rounded card'
+          src='/images/cards/#{card[0]}_#{card[1]}.jpg' />"
+  end
+
+  def card_back_image
+    "<img class='img-polaroid img-rounded card' src='/images/cards/cover.jpg' />"
+  end
+
   def player_total
     calculate_total(session[:player_hand])
   end

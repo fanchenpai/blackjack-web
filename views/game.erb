@@ -21,9 +21,8 @@
     </p>
   <% else %>
     <p>
-      <img class='img-polaroid img-rounded card' src='/images/cards/cover.jpg' />
-      <%= "<img class='img-polaroid img-rounded card'
-                src='/images/cards/#{session[:dealer_hand][1][0]}_#{session[:dealer_hand][1][1]}.jpg' />" %>
+      <%= card_back_image %>
+      <%= card_face_image(session[:dealer_hand][1]) %>
     </p>
   <% end %>
 </div>
@@ -41,7 +40,7 @@
   <h3><%= "#{session[:username]}'s Cards" %></h3>
   <p>
     <% session[:player_hand].each do |c| %>
-      <%= "<img class='img-polaroid img-rounded card' src='/images/cards/#{c[0]}_#{c[1]}.jpg' />" %>
+      <%= card_face_image(c) %>
     <% end %>
   </p>
   <% if @round_ended %>
