@@ -1,11 +1,30 @@
-<form class="form-search" name="my_form" method="post" action="/setbet">
-  <fieldset>
-    <legend>Game Round <%= session[:round_count] %></legend>
-    <div class="help-block">
-      <%= session[:username] + " has " + session[:balance].to_s %>
+<% if session[:balance] > 0 %>
+
+  <div class="well text-center">
+    <form class="form-search" id="my_form" name="my_form" method="post" action="/setbet">
+      <fieldset>
+        <legend>Game Round <%= session[:round_count] %></legend>
+        <p class="lead">
+          You have <%= session[:balance].to_s %>.<br>
+          Choose a bet amount<br>
+          <% [10,50,100,200].each do |n| %>
+            <button class="btn btn-primary" type="button"
+                    onclick="javascript:$('#bet').val(<%= n %>);$('#my_form').submit()"><%= n %></button>
+          <% end %>
+          <br><br>
+          or type in the amount below:<br>
+          <input type="text" id="bet" name="bet" placeholder="50">
+          <button type="submit" class="btn">Make Bet</button>
+        </p>
+      </fieldset>
+    </form>
+  </div>
+
+<% else %>
+  <div class="container text-center">
+    <div class="alert alert-block">
+      Sorry, you don't have any points left.
+      <a class="btn btn-success" href="/restart">Start a new game</a>
     </div>
-    <div>Make a bet for this round</div>
-    <input type="text" name="bet" placeholder="50">
-    <button type="submit" class="btn">Make Bet</button>
-  </fieldset>
-</form>
+  </div>
+<% end %>

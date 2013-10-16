@@ -1,35 +1,73 @@
 
-
-
-
-
 <div class="well text-center">
-  <h4>Dealer's Cards</h4>
-<p>
-  <img class='img-polaroid img-rounded' src='/images/cards/cover.jpg' />
-  <% session[:dealer_hand].last(session[:dealer_hand].length - 1).each do |c| %>
-    <%= "<img class='img-polaroid img-rounded' src='/images/cards/#{c[0]}_#{c[1]}.jpg' />" %>
+  <h3>Dealer's Cards</h3>
+  <% if session[:dealer_turn] %>
+    <p>
+      <% session[:dealer_hand].each do |c| %>
+        <%= "<img class='img-polaroid img-rounded card' src='/images/cards/#{c[0]}_#{c[1]}.jpg' />" %>
+      <% end %>
+    </p>
+    <p>
+      <% if @round_ended %>
+        <h4>Dealer total: <%= dealer_total %>
+      <% else %>
+        <h4>Dealer has <%= dealer_total %> and will hit.</h4>
+        <form method="post" action="/hit">
+          <button class="btn btn-info">
+            Click to see Dealer's next card <i class="icon-arrow-right icon-white"></i>
+          </button>
+        </form>
+      <% end %>
+    </p>
+  <% else %>
+    <p>
+      <img class='img-polaroid img-rounded card' src='/images/cards/cover.jpg' />
+      <%= "<img class='img-polaroid img-rounded card'
+                src='/images/cards/#{session[:dealer_hand][1][0]}_#{session[:dealer_hand][1][1]}.jpg' />" %>
+    </p>
   <% end %>
-</p>
-
 </div>
 
+<% if @round_ended %>
+<div class="text-center alert alert-info">
+  <h4>
+    <strong><%= @result %></strong>
+    <a class="btn btn-primary" href="/bet">Play again</a>
+  </h4>
+</div>
+<% end %>
 
 <div class="well text-center">
-  <h4><%= "#{session[:username]}'s Cards" %></h4>
-<p>
-  <% session[:player_hand].each do |c| %>
-    <%= "<img class='img-polaroid img-rounded' src='/images/cards/#{c[0]}_#{c[1]}.jpg' />" %>
-  <% end %>
-</p>
-
+  <h3><%= "#{session[:username]}'s Cards" %></h3>
   <p>
-    <a class="btn btn-success btn-large" href="/hit">
-      &nbsp;&nbsp;Hit&nbsp;&nbsp;
-    </a>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a class="btn btn-warning btn-large" href="/stay">
-      Stay
-    </a>
+    <% session[:player_hand].each do |c| %>
+      <%= "<img class='img-polaroid img-rounded card' src='/images/cards/#{c[0]}_#{c[1]}.jpg' />" %>
+    <% end %>
   </p>
+  <% if @round_ended %>
+    <p>
+      <h4>Your total: <%= player_total %></h4>
+    </p>
+  <% elsif session[:dealer_turn] %>
+    <p>
+      <h4>You stayed at <%= player_total %>.</h4>
+    </p>
+  <% else %>
+    <p>
+      <h4>You have <%= player_total %>. What would you like to do?</h4>
+      <form style="display:inline" method="post" action="/hit">
+        <button class="btn btn-success btn-large">
+          &nbsp;&nbsp;Hit&nbsp;&nbsp;
+        </button>
+      </form>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <form style="display:inline" method="post" action="/stay">
+        <button class="btn btn-warning btn-large">
+          Stay
+        </button>
+      </form>
+    </p>
+  <% end %>
 </div>
+
+<%= @player_total %>

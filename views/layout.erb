@@ -12,10 +12,12 @@
         <div class="container">
           <a class="brand">Blackjack Game</a>
           <ul class="nav pull-right">
-            <% if session.has_key?(:bet) && session[:bet] > 0 %>
+            <% if session.has_key?(:balance)%>
               <li>
                 <a>Balance:<strong class="text-info"> <%= session[:balance] %></strong></a>
               </li>
+            <% end %>
+            <% if session.has_key?(:bet) && session[:bet] > 0 %>
               <li>
                 <a>Bet:<strong class="text-info">  <%= session[:bet] %></strong></a>
               </li>
@@ -31,19 +33,12 @@
       </div>
     </div>
 
-  <div class="container">
-    <%if @error %>
-      <div class="alert alert-error"><%=@error%></div>
-    <% end %>
-    <%= yield %>
-
-    <small class="muted">
-      <%= session.inspect %>
-    </small>
-  </div>
-
-
-
+    <div class="container">
+      <%if @error %>
+        <div class="alert alert-error"><%=@error%></div>
+      <% end %>
+      <%= yield %>
+    </div>
   </body>
   <script src="http://code.jquery.com/jquery.js"></script>
   <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>

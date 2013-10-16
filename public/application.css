@@ -1,3 +1,15 @@
 body {
 	padding-top: 50px;
 }
+
+img.card {
+  width: 100px;
+  height:auto;
+  margin:auto 10px;
+  border-color: gray;
+  box-shadow: 8px 8px 5px #aaa;
+}
+
+#bet {
+  width: 25px;
+}
